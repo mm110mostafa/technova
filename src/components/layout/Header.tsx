@@ -27,7 +27,8 @@ const nav = [
   { label: 'لپ‌تاپ گیمینگ', icon: 'gamepad', to: () => go({ name: 'shop', cat: 'gaming' }) },
   { label: 'خدمات', icon: 'wrench', to: () => go({ name: 'home' }, 'services') },
   { label: 'شگفت‌انگیزها', icon: 'zap', to: () => go({ name: 'home' }, 'deals') },
-  { label: 'تماس با ما', icon: 'phone', to: () => go({ name: 'home' }, 'contact') }
+  { label: 'تماس با ما', icon: 'phone', to: () => go({ name: 'home' }, 'contact') },
+  { label: 'درباره ما', icon: 'info', to: () => go({ name: 'home' }, 'about') }
 ];
 
 export function Header() {
@@ -141,7 +142,8 @@ function MegaMenu({ onPick }: { onPick: () => void }) {
     { title: 'لوازم جانبی', ids: ['keyboard', 'mouse', 'audio'] }
   ];
   return (
-    <div className="grid grid-cols-[1fr_1fr_1fr_1.25fr] gap-6 border-t border-ink-100 p-6">
+    <div>
+      <div className="grid grid-cols-[1fr_1fr_1fr_1.25fr] gap-6 border-t border-ink-100 p-6">
       {groups.map((g, gi) => (
         <motion.div key={g.title} initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.05 * gi }}>
           <h4 className="mb-3 flex items-center gap-2 text-sm font-black text-ink-900">
@@ -189,6 +191,23 @@ function MegaMenu({ onPick }: { onPick: () => void }) {
           <span className="text-xs text-ink-300 line-through">{fa(deal.oldPrice!)}</span>
         </div>
       </motion.button>
+      </div>
+      <div className="flex flex-wrap items-center justify-between gap-3 border-t border-ink-100 bg-mist/70 px-6 py-4">
+        <div className="flex items-center gap-3">
+          <span className="grid h-10 w-10 shrink-0 place-items-center rounded-xl bg-ink-900 text-volt-400"><Icon name="bag" size={20} /></span>
+          <div>
+            <p className="text-sm font-black text-ink-900">همه محصولات در یک نگاه</p>
+            <p className="mt-0.5 text-xs text-ink-400">لپ‌تاپ، قطعه و لوازم جانبی با ضمانت اصالت</p>
+          </div>
+        </div>
+        <button
+          onClick={() => { onPick(); go({ name: 'shop' }); }}
+          className="group inline-flex shrink-0 items-center gap-2 rounded-full bg-ink-900 px-5 py-2.5 text-sm font-black text-white transition-colors hover:bg-ink-800"
+        >
+          ورود به فروشگاه
+          <Icon name="arrowLeft" size={15} className="transition-transform group-hover:-translate-x-1" />
+        </button>
+      </div>
     </div>
   );
 }

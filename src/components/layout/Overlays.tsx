@@ -180,7 +180,9 @@ export function Qty({ value, onChange, max, small }: { value: number; onChange: 
 export function MobileMenu() {
   const open = useUI((s) => s.menuOpen);
   const setMenu = useUI((s) => s.setMenu);
-  const [catOpen, setCatOpen] = useState(true);
+  const [catOpen, setCatOpen] = useState(false);
+  // keep the category grid collapsed each time the drawer opens — the user expands it on demand
+  useEffect(() => { if (open) setCatOpen(false); }, [open]);
   return (
     <Drawer open={open} onClose={() => setMenu(false)} side="right" label="منوی اصلی">
       <div className="flex items-center justify-between border-b border-ink-100 p-5">
@@ -216,12 +218,17 @@ export function MobileMenu() {
             </motion.div>
           )}
         </AnimatePresence>
+        <button onClick={() => go({ name: 'shop' })} className="flex w-full items-center gap-3 rounded-2xl p-3 font-bold text-ink-900 hover:bg-mist">
+          <Icon name="bag" className="text-ink-400" /> فروشگاه
+          <Icon name="chevronLeft" size={16} className="mr-auto text-ink-300" />
+        </button>
         {[
           ['zap', 'شگفت‌انگیزها', () => go({ name: 'home' }, 'deals')],
           ['wrench', 'خدمات ارتقا و تعمیر', () => go({ name: 'home' }, 'services')],
           ['heart', 'علاقه‌مندی‌ها', () => go({ name: 'wishlist' })],
           ['info', 'سوالات متداول', () => go({ name: 'home' }, 'faq')],
-          ['phone', 'تماس با ما', () => go({ name: 'home' }, 'contact')]
+          ['phone', 'تماس با ما', () => go({ name: 'home' }, 'contact')],
+          ['shield', 'درباره ما', () => go({ name: 'home' }, 'about')]
         ].map(([icon, label, fn]) => (
           <button key={label as string} onClick={fn as () => void} className="flex w-full items-center gap-3 rounded-2xl p-3 font-bold text-ink-900 hover:bg-mist">
             <Icon name={icon as string} className="text-ink-400" /> {label as string}
