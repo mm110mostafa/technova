@@ -110,17 +110,17 @@ export function Hero() {
           </div>
 
           {/* Visual — reference: tall pill portrait card + product card + rotating gears */}
-          <div className="relative mx-auto flex w-full max-w-[560px] items-end justify-center gap-3 sm:gap-4">
-            <motion.div style={{ y: yA }} className="relative w-[38%] shrink-0">
+          <div className="relative mx-auto flex w-full max-w-[560px] flex-col gap-4 sm:flex-row sm:items-end sm:justify-center">
+            <motion.div style={{ y: yA }} className="relative w-full sm:w-[38%] sm:shrink-0">
               <motion.button
                 initial={{ opacity: 0, y: 60 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 1, ease, delay: 0.5 }}
                 whileHover={{ y: -6 }}
                 onClick={() => go({ name: 'shop', cat: 'pc' })}
-                className="group relative block aspect-[0.44] w-full overflow-hidden rounded-full p-1.5 ring-1 ring-white/20"
+                className="group relative block aspect-[16/10] w-full overflow-hidden rounded-[2rem] p-1.5 ring-1 ring-white/20 sm:aspect-[0.44] sm:rounded-full"
               >
-                <div className="relative h-full w-full overflow-hidden rounded-full">
+                <div className="relative h-full w-full overflow-hidden rounded-[1.75rem] sm:rounded-full">
                   <img src="images/setup-dark.jpg" alt="ست گیمینگ آرنوتک" className="h-full w-full object-cover transition-transform duration-700 group-hover:scale-110" />
                   <div className="absolute inset-0 bg-gradient-to-t from-ink-900/90 via-ink-900/10 to-transparent" />
                   <div className="absolute inset-x-0 bottom-8 text-center">
@@ -138,7 +138,7 @@ export function Hero() {
               </div>
             </motion.div>
 
-            <motion.div style={{ y: yB }} className="relative w-[58%]">
+            <motion.div style={{ y: yB }} className="relative w-full sm:w-[58%]">
               <motion.button
                 initial={{ opacity: 0, y: 80 }}
                 animate={{ opacity: 1, y: 0 }}

@@ -55,7 +55,7 @@ export function SectionHeading({
           <Orb />
           {eyebrow}
         </div>
-        <h2 className={cx('text-[1.7rem] font-black leading-[1.35] tracking-tight sm:text-4xl', light ? 'text-white' : 'text-ink-900')}>{title}</h2>
+        <h2 className={cx('text-[1.25rem] font-black leading-[1.35] tracking-tight sm:text-4xl', light ? 'text-white' : 'text-ink-900')}>{title}</h2>
       </Reveal>
       {action && <Reveal delay={0.1}>{action}</Reveal>}
     </div>
