@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { AnimatePresence, motion, useMotionValueEvent, useScroll, useSpring } from 'framer-motion';
+import { AnimatePresence, motion, useMotionValueEvent, useScroll, useSpring, useTransform } from 'framer-motion';
 import { Header } from './components/layout/Header';
 import { Footer } from './components/layout/Footer';
 import { CartDrawer, MobileMenu, MobileTabBar, QuickView, SearchOverlay, Toasts } from './components/layout/Overlays';
@@ -32,23 +32,47 @@ function ScrollProgress() {
   return <motion.div style={{ scaleX }} className="fixed inset-x-0 top-0 z-[70] h-[3px] origin-right bg-gradient-to-l from-volt-400 to-volt-600" />;
 }
 
+const RING_R = 26.5;
+const RING_C = 2 * Math.PI * RING_R;
+
 function BackToTop() {
-  const { scrollY } = useScroll();
+  const { scrollY, scrollYProgress } = useScroll();
   const [show, setShow] = useState(false);
-  useMotionValueEvent(scrollY, 'change', (v) => setShow(v > 700));
+  const progress = useSpring(scrollYProgress, { stiffness: 90, damping: 26, mass: 0.3 });
+  const dashOffset = useTransform(progress, [0, 1], [RING_C, 0]);
+  useMotionValueEvent(scrollY, 'change', (v) => setShow(v > 600));
+
   return (
     <AnimatePresence>
       {show && (
         <motion.button
-          initial={{ opacity: 0, scale: 0.6, y: 20 }}
+          initial={{ opacity: 0, scale: 0.5, y: 24 }}
           animate={{ opacity: 1, scale: 1, y: 0 }}
-          exit={{ opacity: 0, scale: 0.6, y: 20 }}
+          exit={{ opacity: 0, scale: 0.5, y: 24 }}
+          transition={{ type: 'spring', stiffness: 320, damping: 26 }}
           whileHover={{ y: -4 }}
+          whileTap={{ scale: 0.9 }}
           onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}
           aria-label="بازگشت به بالا"
-          className="fixed bottom-6 right-6 z-30 hidden h-12 w-12 place-items-center rounded-2xl bg-ink-900 text-white shadow-lift hover:bg-volt-400 hover:text-ink-900 md:grid"
+          title="بازگشت به بالا"
+          className="group fixed bottom-24 left-4 z-30 grid h-14 w-14 place-items-center md:bottom-6 md:left-6"
         >
-          <Icon name="chevronDown" size={20} className="rotate-180" />
+          {/* scroll-progress ring — fills as you go down the page */}
+          <svg viewBox="0 0 56 56" className="absolute inset-0 -rotate-90" aria-hidden="true">
+            <circle cx="28" cy="28" r={RING_R} fill="none" strokeWidth="2" className="stroke-ink-900/10" />
+            <motion.circle
+              cx="28" cy="28" r={RING_R} fill="none" strokeWidth="2.5" strokeLinecap="round"
+              strokeDasharray={RING_C}
+              style={{ strokeDashoffset: dashOffset }}
+              className="stroke-volt-400"
+            />
+          </svg>
+          <span className="grid h-12 w-12 place-items-center rounded-full bg-ink-900 shadow-lift ring-1 ring-white/10 transition-all duration-300 group-hover:bg-ink-800 group-hover:shadow-glow">
+            <span className="flex flex-col items-center text-white transition-colors duration-300 group-hover:text-volt-400">
+              <Icon name="chevronDown" size={18} stroke={2.4} className="-mb-1 rotate-180" />
+              <Icon name="chevronDown" size={18} stroke={2.4} className="rotate-180" />
+            </span>
+          </span>
         </motion.button>
       )}
     </AnimatePresence>
