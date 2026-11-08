@@ -9,7 +9,8 @@
       "Bash(ls node_modules 2>/dev/null | grep -iE \"puppeteer|playwright|chromium\" ; which google-chrome chromium chromium-browser 2>/dev/null; ls /usr/bin 2>/dev/null | grep -iE \"chromium|firefox\")",
       "Read(//usr/**)",
       "Bash(node chkimports.mjs)",
-      "Bash(git checkout *)"
+      "Bash(git checkout *)",
+      "Bash(echo \"TSC_EXIT=$?\")"
     ]
   }
 }

@@ -12,6 +12,17 @@ type Sort = 'popular' | 'cheap' | 'expensive' | 'discount' | 'rating';
 const sorts: Array<[Sort, string]> = [['popular', 'محبوب‌ترین'], ['rating', 'بیشترین امتیاز'], ['cheap', 'ارزان‌ترین'], ['expensive', 'گران‌ترین'], ['discount', 'بیشترین تخفیف']];
 const MAX = 200_000_000;
 
+/* Lock the page scroll while the mobile filter sheet is open — otherwise dragging the
+   sheet also scrolls the content behind it. */
+function useLockScroll(lock: boolean) {
+  useEffect(() => {
+    if (!lock) return;
+    const prev = document.body.style.overflow;
+    document.body.style.overflow = 'hidden';
+    return () => { document.body.style.overflow = prev; };
+  }, [lock]);
+}
+
 export default function Shop({ cat, q }: { cat?: CategoryId; q?: string }) {
   const [sort, setSort] = useState<Sort>('popular');
   const [selBrands, setSelBrands] = useState<string[]>([]);
@@ -20,6 +31,7 @@ export default function Shop({ cat, q }: { cat?: CategoryId; q?: string }) {
   const [onSale, setOnSale] = useState(false);
   const [query, setQuery] = useState(q ?? '');
   const [filtersOpen, setFiltersOpen] = useState(false);
+  useLockScroll(filtersOpen);
 
   useEffect(() => setQuery(q ?? ''), [q]);
 
@@ -174,13 +186,18 @@ export default function Shop({ cat, q }: { cat?: CategoryId; q?: string }) {
               animate={{ y: 0 }}
               exit={{ y: '100%' }}
               transition={{ duration: 0.45, ease: [0.22, 1, 0.36, 1] }}
-              drag="y"
-              dragConstraints={{ top: 0, bottom: 0 }}
-              dragElastic={{ top: 0, bottom: 0.4 }}
-              onDragEnd={(_, i) => i.offset.y > 120 && setFiltersOpen(false)}
               className="fixed inset-x-0 bottom-0 z-50 max-h-[85vh] overflow-y-auto rounded-t-[2rem] bg-white p-5 pb-8 lg:hidden"
             >
-              <div className="mx-auto mb-4 h-1.5 w-12 rounded-full bg-ink-200" />
+              {/* Drag handle — only this bar captures the drag gesture, so the rest of the sheet scrolls natively. */}
+              <motion.div
+                drag="y"
+                dragConstraints={{ top: 0, bottom: 0 }}
+                dragElastic={{ top: 0, bottom: 0.4 }}
+                onDragEnd={(_, i) => i.offset.y > 120 && setFiltersOpen(false)}
+                className="mx-auto mb-4 flex h-11 w-12 items-center justify-center"
+              >
+                <div className="h-1 w-12 rounded-full bg-ink-200" />
+              </motion.div>
               <div className="mb-5 flex items-center justify-between">
                 <h3 className="font-black text-ink-900">فیلترها</h3>
                 <button onClick={() => setFiltersOpen(false)} className="text-sm font-bold text-ink-500">بستن</button>

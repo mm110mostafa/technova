@@ -11,6 +11,7 @@ const paths: Record<string, JSX.Element> = {
   menu: (<><path d="M4 7h16" /><path d="M4 12h10" /><path d="M4 17h16" /></>),
   close: (<><path d="M6 6l12 12" /><path d="M18 6 6 18" /></>),
   chevronDown: (<path d="m6 9 6 6 6-6" />),
+  chevronUp: (<path d="m6 15 6-6 6 6" />),
   chevronLeft: (<path d="m15 6-6 6 6 6" />),
   chevronRight: (<path d="m9 6 6 6-6 6" />),
   arrowLeft: (<><path d="M19 12H5" /><path d="m11 6-6 6 6 6" /></>),
