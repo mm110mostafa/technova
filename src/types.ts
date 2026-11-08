@@ -38,5 +38,6 @@ export type Route =
   | { name: 'home' }
   | { name: 'shop'; cat?: CategoryId; q?: string }
   | { name: 'product'; id: string }
+  | { name: 'about' }
   | { name: 'cart' }
   | { name: 'wishlist' };

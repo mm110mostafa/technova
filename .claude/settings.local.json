@@ -2,7 +2,14 @@
   "permissions": {
     "allow": [
       "Bash(npm run *)",
-      "Bash(npx vite *)"
+      "Bash(npx vite *)",
+      "Bash(npx tsc *)",
+      "Bash(timeout 60 npx vite --host 127.0.0.1 --port 5173)",
+      "Read(//tmp/**)",
+      "Bash(ls node_modules 2>/dev/null | grep -iE \"puppeteer|playwright|chromium\" ; which google-chrome chromium chromium-browser 2>/dev/null; ls /usr/bin 2>/dev/null | grep -iE \"chromium|firefox\")",
+      "Read(//usr/**)",
+      "Bash(node chkimports.mjs)",
+      "Bash(git checkout *)"
     ]
   }
 }

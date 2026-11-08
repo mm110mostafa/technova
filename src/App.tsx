@@ -6,6 +6,7 @@ import { CartDrawer, MobileMenu, MobileTabBar, QuickView, SearchOverlay, Toasts 
 import Home from './pages/Home';
 import Shop from './pages/Shop';
 import ProductPage from './pages/Product';
+import AboutPage from './pages/About';
 import { CartPage, WishlistPage } from './pages/Cart';
 import { consumeAnchor, parseHash, scrollToId, toHash, useUI } from './store/useUI';
 import { Icon } from './components/ui/Icon';
@@ -17,6 +18,8 @@ function Page({ route }: { route: Route }) {
       return <Shop cat={route.cat} q={route.q} />;
     case 'product':
       return <ProductPage id={route.id} />;
+    case 'about':
+      return <AboutPage />;
     case 'cart':
       return <CartPage />;
     case 'wishlist':
@@ -68,10 +71,7 @@ function BackToTop() {
             />
           </svg>
           <span className="grid h-12 w-12 place-items-center rounded-full bg-ink-900 shadow-lift ring-1 ring-white/10 transition-all duration-300 group-hover:bg-ink-800 group-hover:shadow-glow">
-            <span className="flex flex-col items-center text-white transition-colors duration-300 group-hover:text-volt-400">
-              <Icon name="chevronDown" size={18} stroke={2.4} className="-mb-1 rotate-180" />
-              <Icon name="chevronDown" size={18} stroke={2.4} className="rotate-180" />
-            </span>
+            <Icon name="chevronUp" size={22} stroke={2.6} className="text-white transition-colors duration-300 group-hover:text-volt-400" />
           </span>
         </motion.button>
       )}

@@ -36,6 +36,8 @@ export function parseHash(hash: string): Route {
       return { name: 'shop', cat: (qs.get('cat') as CategoryId) || undefined, q: qs.get('q') || undefined };
     case 'product':
       return arg ? { name: 'product', id: arg } : { name: 'shop' };
+    case 'about':
+      return { name: 'about' };
     case 'cart':
       return { name: 'cart' };
     case 'wishlist':
@@ -56,6 +58,8 @@ export function toHash(r: Route): string {
     }
     case 'product':
       return '#/product/' + r.id;
+    case 'about':
+      return '#/about';
     case 'cart':
       return '#/cart';
     case 'wishlist':

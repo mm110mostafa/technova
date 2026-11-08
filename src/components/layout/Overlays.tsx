@@ -228,7 +228,7 @@ export function MobileMenu() {
           ['heart', 'علاقه‌مندی‌ها', () => go({ name: 'wishlist' })],
           ['info', 'سوالات متداول', () => go({ name: 'home' }, 'faq')],
           ['phone', 'تماس با ما', () => go({ name: 'home' }, 'contact')],
-          ['shield', 'درباره ما', () => go({ name: 'home' }, 'about')]
+          ['shield', 'درباره ما', () => go({ name: 'about' })]
         ].map(([icon, label, fn]) => (
           <button key={label as string} onClick={fn as () => void} className="flex w-full items-center gap-3 rounded-2xl p-3 font-bold text-ink-900 hover:bg-mist">
             <Icon name={icon as string} className="text-ink-400" /> {label as string}

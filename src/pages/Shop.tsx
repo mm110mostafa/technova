@@ -127,11 +127,12 @@ export default function Shop({ cat, q }: { cat?: CategoryId; q?: string }) {
         </aside>
 
         <div>
-          <div className="mb-5 flex items-center gap-2">
-            <button onClick={() => setFiltersOpen(true)} className="flex h-11 items-center gap-2 rounded-2xl bg-white px-4 text-sm font-bold text-ink-900 ring-1 ring-ink-200 lg:hidden">
+          <div className="mb-5 flex items-center justify-between gap-2">
+            <button onClick={() => setFiltersOpen(true)} className="flex shrink-0 h-11 items-center gap-2 rounded-2xl bg-white px-4 text-sm font-bold text-ink-900 ring-1 ring-ink-200 lg:hidden">
               <Icon name="sliders" size={17} /> فیلتر {activeCount > 0 && <span className="grid h-5 w-5 place-items-center rounded-full bg-volt-400 text-[10px] font-black">{fa(activeCount)}</span>}
             </button>
-            <div className="no-scrollbar flex flex-1 items-center gap-1 overflow-x-auto rounded-2xl bg-white p-1 ring-1 ring-ink-100">
+            {/* Sorting bar — hidden on phones, visible from tablet up. On mobile it lives inside the filter sheet. */}
+            <div className="no-scrollbar hidden sm:flex sm:flex-1 items-center gap-1 overflow-x-auto rounded-2xl bg-white p-1 ring-1 ring-ink-100">
               <span className="hidden shrink-0 px-3 text-xs font-bold text-ink-400 sm:inline">مرتب‌سازی:</span>
               {sorts.map(([k, l]) => (
                 <button key={k} onClick={() => setSort(k)} className={cx('relative h-9 shrink-0 rounded-xl px-3 text-xs font-bold transition-colors sm:text-[13px]', sort === k ? 'text-white' : 'text-ink-500 hover:text-ink-900')}>
@@ -184,6 +185,20 @@ export default function Shop({ cat, q }: { cat?: CategoryId; q?: string }) {
                 <h3 className="font-black text-ink-900">فیلترها</h3>
                 <button onClick={() => setFiltersOpen(false)} className="text-sm font-bold text-ink-500">بستن</button>
               </div>
+
+              {/* Sorting — the bar above (sm:flex) is hidden on phones, so the sheet is the only place to change it. */}
+              <div className="mb-5">
+                <h4 className="mb-3 text-sm font-black text-ink-900">مرتب‌سازی بر اساس</h4>
+                <div className="flex flex-wrap gap-2">
+                  {sorts.map(([k, l]) => (
+                    <button key={k} onClick={() => setSort(k)} className={cx('relative rounded-xl px-3 py-2 text-xs font-bold transition-colors', sort === k ? 'bg-ink-900 text-white' : 'bg-mist text-ink-600 ring-1 ring-ink-100 hover:ring-ink-300')}>
+                      {sort === k && <motion.span layoutId="sort-pill-sheet" className="absolute inset-0 rounded-xl bg-ink-900" transition={{ type: 'spring', stiffness: 400, damping: 32 }} />}
+                      <span className="relative">{l}</span>
+                    </button>
+                  ))}
+                </div>
+              </div>
+
               {Filters}
               <Button className="mt-6 w-full" onClick={() => setFiltersOpen(false)}>نمایش {fa(list.length)} محصول</Button>
             </motion.div>

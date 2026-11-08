@@ -28,7 +28,7 @@ const nav = [
   { label: 'خدمات', icon: 'wrench', to: () => go({ name: 'home' }, 'services') },
   { label: 'شگفت‌انگیزها', icon: 'zap', to: () => go({ name: 'home' }, 'deals') },
   { label: 'تماس با ما', icon: 'phone', to: () => go({ name: 'home' }, 'contact') },
-  { label: 'درباره ما', icon: 'info', to: () => go({ name: 'home' }, 'about') }
+  { label: 'درباره ما', icon: 'info', to: () => go({ name: 'about' }) }
 ];
 
 export function Header() {
